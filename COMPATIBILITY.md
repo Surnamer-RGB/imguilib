@@ -50,7 +50,7 @@ The public API covers contexts and frames; windows and child windows; layout and
 | Platform viewports | Absent | ScreenGui cannot create native OS windows |
 | Drag-and-drop payload API | Absent | No BeginDragDropSource/Target or typed payload lifecycle |
 | Multi-select / selection storage | Absent | No upstream selection IO |
-| Debug / metrics / demo | Absent | Demo intentionally omitted |
+| Debug / metrics / demo | Separate demo; no upstream debug tools | Optional Demo.luau showcases the implemented API; upstream metrics/debug tools are absent |
 
 ## Signature differences
 

@@ -1,6 +1,6 @@
 # IMGUILIB
 
-A reusable immediate-mode GUI library for Roblox Luau, distributed as a single `ImGui.luau` file. Loading the file returns the API table. It creates no windows, starts no render loop, and downloads no external code automatically. No demo is included.
+A reusable immediate-mode GUI library for Roblox Luau, distributed as a single `ImGui.luau` file. Loading the library returns the API table. It creates no windows, starts no render loop, and downloads no external code automatically. An optional, separately executed [Demo.luau](Demo.luau) showcases the implemented features.
 
 **Version 0.1.0 implements a subset of Dear ImGui. It is not a complete port or a verified 1:1 reproduction.** See [COMPATIBILITY.md](COMPATIBILITY.md) for supported features and differences. Roblox GUI has its own fonts, rasterizer, input, and clipping; matching colors and dimensions does not guarantee matching pixels.
 
@@ -26,6 +26,28 @@ In Roblox Studio, use the file as the contents of a ModuleScript and load it wit
 | `DisplayOrder` | `10000` |
 
 `gethui` is optional. The library does not require `Drawing`, `hookmetamethod`, `getgenv`, or injection functions. It creates UI inside an existing local client.
+
+## Optional demo
+
+Download `ImGui.luau` and `Demo.luau` into your executor's workspace, then run:
+
+```lua
+local demo = assert(loadstring(readfile("Demo.luau"), "IMGUILIB Demo"))()
+```
+
+The demo loads the local library first. If it cannot read the local library, it downloads `ImGui.luau` from this repository's `main` branch. After `Demo.luau` has been uploaded to the repository, it can also be launched directly:
+
+```lua
+local demo = assert(loadstring(game:HttpGet("https://raw.githubusercontent.com/Surnamer-RGB/imguilib/main/Demo.luau"), "IMGUILIB Demo"))()
+```
+
+The demo has 11 sections: Widgets, Input, Colors, Layout, Data, Popups, Drawing, Windows, Style, Diagnostics, and API. Use the Section combo or Previous/Next buttons to navigate. It includes all 18 generated numeric vector variants and a catalog of exported functions. Window settings are stored in memory only. Images depend on Roblox asset availability.
+
+Close the main window or click **Unload demo** to disconnect and destroy its context. Running the demo again unloads its previous instance. You can also call `demo:Destroy()` or `getgenv().IMGUILIB_Demo:Destroy()` when `getgenv` is available.
+
+For integration with an already loaded library, invoke the demo chunk with `(ImGui, options)`. Options include `Parent` and `AutoConnect` (default true). With `AutoConnect = false`, call `demo:Draw(dt)` inside your own `NewFrame/Render` pair, with `demo.Context` current. `demo:SetSection("Drawing")` selects a section programmatically. `demo.State` exposes demo state.
+
+The showcase demonstrates this library's implemented subset, not missing upstream systems such as docking or native viewports. The library remains independent of the demo.
 
 ## Frame lifecycle
 
